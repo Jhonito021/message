@@ -1,0 +1,357 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #f5e6f8, #ffe6f2);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: end;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        h1 {
+            color: #d63384;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            font-size: 2.5rem;
+        }
+        
+        .scene {
+            position: relative;
+            width: 400px;
+            height: 300px;
+            margin-bottom: 40px;
+            perspective: 1000px;
+        }
+        
+        .envelope-wrapper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        
+        .envelope {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        /* Corps de l'enveloppe */
+        .envelope-body {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 10px;
+            z-index: 2;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+        }
+        
+        /* Rabat avant de l'enveloppe */
+        .envelope-flap {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #f8d0e0;
+            z-index: 4;
+            transform-origin: top;
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            border-radius: 10px;
+            clip-path: polygon(0% 0%, 50% 50%, 100% 0%);
+        }
+        
+        /* Côtés de l'enveloppe */
+        .envelope-side-left, .envelope-side-right {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #f9d5e5;
+            z-index: 1;
+            opacity: 0.9;
+        }
+        
+        .envelope-side-left {
+            clip-path: polygon(0% 0%, 0% 100%, 50% 50%);
+            transform-origin: left;
+        }
+        
+        .envelope-side-right {
+            clip-path: polygon(100% 0%, 100% 100%, 50% 50%);
+            transform-origin: right;
+        }
+        
+        /* Lorsque l'enveloppe est ouverte */
+        .envelope-wrapper.open {
+            transform: translateY(-50px);
+        }
+        
+        .envelope-wrapper.open .envelope-flap {
+            transform: rotateX(180deg);
+        }
+        
+        .envelope-wrapper.open .envelope-side-left {
+            transform: rotateY(60deg);
+        }
+        
+        .envelope-wrapper.open .envelope-side-right {
+            transform: rotateY(-60deg);
+        }
+        
+        /* Cœur sur l'enveloppe */
+        .heart-seal {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: #d63384;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            z-index: 5;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s ease;
+        }
+        
+        .envelope-wrapper.open .heart-seal {
+            top: -30px;
+            transform: translateX(-50%) scale(0.8);
+            opacity: 0.8;
+        }
+        
+        /* Lettre à l'intérieur */
+        .letter {
+            position: absolute;
+            width: 90%;
+            height: 280px;
+            background: #fff9fc;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            top: 20px;
+            left: 5%;
+            z-index: 3;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            transform-origin: center;
+            transform: scale(0.8) translateY(20px);
+            opacity: 0;
+            overflow-y: auto;
+        }
+        
+        .envelope-wrapper.open .letter {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            top: -250px;
+        }
+        
+        .letter-header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 1px dashed #d63384;
+            padding-bottom: 10px;
+        }
+        
+        .letter-header h2 {
+            color: #d63384;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .letter-header p {
+            color: #666;
+            font-style: italic;
+        }
+        
+        .letter-content {
+            line-height: 1.6;
+            text-align: left;
+            font-size: 1.1rem;
+        }
+        
+        .letter-content p {
+            margin-bottom: 15px;
+        }
+        
+        .letter-signature {
+            text-align: right;
+            margin-top: 20px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #d63384;
+        }
+        
+        .icon-row {
+            display: flex;
+            justify-content: space-around;
+            margin: 15px 0;
+            font-size: 1.5rem;
+            color: #d63384;
+        }
+        
+        /* Bouton */
+        .button-container {
+            margin-top: 30px;
+        }
+        
+        .open-btn {
+            background: linear-gradient(to right, #d63384, #ff6b9d);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(214, 51, 132, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 auto;
+            touch-action: manipulation;
+        }
+        
+        .open-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(214, 51, 132, 0.5);
+        }
+        
+        .open-btn:active {
+            transform: translateY(0);
+        }
+        
+        .open-btn i {
+            font-size: 1.4rem;
+        }
+        
+        .message {
+            margin-top: 20px;
+            color: #666;
+            font-style: italic;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            max-width: 500px;
+            line-height: 1.5;
+        }
+        
+        .message.show {
+            opacity: 1;
+        }
+        
+        .instructions {
+            margin-top: 20px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* Animation du coeur */
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .heart-seal.beat {
+            animation: heartBeat 1s ease-in-out;
+        }
+        
+        /* Animation d'envol */
+        @keyframes floatUp {
+            0% { transform: scale(1) translateY(0); opacity: 1; }
+            100% { transform: scale(0.5) translateY(-100px); opacity: 0; }
+        }
+        
+        .heart-seal.float-up {
+            animation: floatUp 1.5s ease-out forwards;
+        }
+        
+        /* Effet d'ombre pour l'enveloppe ouverte */
+        .envelope-wrapper.open::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 20px;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 70%);
+            bottom: -30px;
+            left: 0;
+            border-radius: 50%;
+            z-index: -1;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .scene {
+                width: 320px;
+                height: 240px;
+            }
+            
+            .letter {
+                height: 350px;
+                padding: 20px;
+            }
+            
+            .envelope-wrapper.open .letter {
+                top: -220px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .heart-seal {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .scene {
+                width: 280px;
+                height: 210px;
+            }
+            
+            .letter {
+                height: 350px;
+                padding: 15px;
+            }
+            
+            .envelope-wrapper.open .letter {
+                top: -200px;
+            }
+            
+            .letter-content {
+                font-size: 1rem;
+            }
+            
+            .open-btn {
+                padding: 12px 30px;
+                font-size: 1.1rem;
+            }
+        }
