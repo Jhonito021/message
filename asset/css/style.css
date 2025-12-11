@@ -278,7 +278,8 @@
         color: red;
         font-size: 24px;
         animation: floatUp 4s linear forwards;
-        }
+        top: 70%;
+    }
 
     @keyframes floatUp {
       0% {
